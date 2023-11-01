@@ -141,10 +141,15 @@ cython_debug/
 .idea/
 
 # Custom files
+.gitignore
+Twitch1.py
+Twitch2.py
 run.py
 chromedriver*
 
 # Folders
+assets/*
+.vscode/*
 cookies/*
 logs/*
 screenshots/*

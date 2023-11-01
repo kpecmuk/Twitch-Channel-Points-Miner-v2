@@ -3,12 +3,20 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
+    "configurations": [        
         {
-            "name": "Python: run.py",
+            "name": "Python: Twitch1.py",
             "type": "python",
             "request": "launch",
-            "program": "${cwd}/run.py",
+            "program": "${cwd}/Twitch1.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Twitch2.py",
+            "type": "python",
+            "request": "launch",
+            "program": "${cwd}/Twitch2.py",
             "console": "integratedTerminal",
             "justMyCode": true
         }

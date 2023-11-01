@@ -123,23 +123,8 @@ $(document).ready(function () {
     if (!localStorage.getItem("dark-mode")) localStorage.setItem("dark-mode", true);
     if (!localStorage.getItem("sort-by")) localStorage.setItem("sort-by", "Name ascending");
 
-    // Restore settings from localStorage on page load
     $('#annotations').prop("checked", localStorage.getItem("annotations") === "true");
     $('#dark-mode').prop("checked", localStorage.getItem("dark-mode") === "true");
-
-    // Handle the annotation toggle click event
-    $('#annotations').click(() => {
-        var isChecked = $('#annotations').prop("checked");
-        localStorage.setItem("annotations", isChecked);
-        updateAnnotations();
-    });
-
-    // Handle the dark mode toggle click event
-    $('#dark-mode').click(() => {
-        var isChecked = $('#dark-mode').prop("checked");
-        localStorage.setItem("dark-mode", isChecked);
-        toggleDarkMode();
-    });
 
     $('#startDate').val(formatDate(startDate));
     $('#endDate').val(formatDate(endDate));
@@ -171,14 +156,6 @@ function changeStreamer(streamer, index) {
     $("li").removeClass("is-active")
     $("li").eq(index - 1).addClass('is-active');
     currentStreamer = streamer;
-
-    // Update the chart title with the current streamer's name
-    options.title.text = `${streamer.replace(".json", "")}'s channel points (dates are displayed in UTC)`;
-    chart.updateOptions(options);
-
-    // Save the selected streamer in localStorage
-    localStorage.setItem("selectedStreamer", currentStreamer);
-
     getStreamerData(streamer);
 }
 
@@ -228,26 +205,12 @@ function renderStreamers() {
             displayname = streamer.name.replace(".json", "");
             if (sortField == 'points') displayname = "<font size='-2'>" + streamer['points'] + "</font>&nbsp;" + displayname;
             else if (sortField == 'last_activity') displayname = "<font size='-2'>" + formatDate(streamer['last_activity']) + "</font>&nbsp;" + displayname;
-            var isActive = currentStreamer === streamer.name;
-            if (!isActive && localStorage.getItem("selectedStreamer") === streamer.name) {
-                isActive = true;
-                currentStreamer = streamer.name;
-            }
-            var activeClass = isActive ? 'is-active' : '';
-            var listItem = `<li id="streamer-${streamer.name}" class="${activeClass}"><a onClick="changeStreamer('${streamer.name}', ${index + 1}); return false;">${displayname}</a></li>`;
-            $("#streamers-list").append(listItem);
-            if (isActive) {
-                // Scroll the selected streamer into view
-                document.getElementById(`streamer-${streamer.name}`).scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-            }
+            $("#streamers-list").append(`<li><a onClick="changeStreamer('${streamer.name}', ${index + 1}); return false;">${displayname}</a></li>`);
             if (index === array.length - 1) resolve();
         });
     });
     promised.then(() => {
-        changeStreamer(currentStreamer, streamersList.findIndex(streamer => streamer.name === currentStreamer) + 1);
+        changeStreamer(streamersList[0].name, 1);
     });
 }
 
