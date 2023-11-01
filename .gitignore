@@ -144,12 +144,11 @@ cython_debug/
 .gitignore
 Twitch1.py
 Twitch2.py
-run.py
 chromedriver*
 
 # Folders
-assets/*
-.vscode/*
+assets/
+.vscode/
 cookies/*
 logs/*
 screenshots/*
